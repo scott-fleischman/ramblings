@@ -37,7 +37,7 @@ Here is a way of representing them.
 
 Product can be represented by adding the current component value to the product of the previous cardinalities (except the first one). This makes the first component represented in the least significant digits of the representative number.
 
-| `abstract letter` | `letter case` | final form` | `Fin 5 * Fin 2 * Fin 2 = Fin 20` |
+| `abstract letter` | `letter case` | `final form` | `Fin 5 * Fin 2 * Fin 2 = Fin 20` |
 | --- | --- | --- | --- |
 | `a` | `uppercase` | `final` | `(1 * 0) + (5 * 0) + ((5 * 2) * 0) = 0` |
 | `b` | `uppercase` | `final` | `(1 * 1) + (5 * 0) + ((5 * 2) * 0) = 1` |

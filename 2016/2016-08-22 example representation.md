@@ -5,6 +5,7 @@ Given our previous example, let's look at a basic numeric representation.
 `symbol` can be represented in `Fin 13`. One way to assign the numbers is as follows.
 
 | `symbol` | `Fin 13` |
+| --- | --- |
 | `A` | 0 |
 | `B` | 1 |
 | `C` | 2 |

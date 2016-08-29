@@ -6,6 +6,19 @@ We use some sort of dependent types in data formats all the time, such as storin
 
 An array of length zero has cardinality `Fin 1` and type of `Fin 1` contains no information so it disappears product types. A sigma type can be thought of as a dependent pair. The cardinality of the sigma type then is as follows: `| Sigma A (B A) | = | A | * | (B A) |`. This is what you'd expect for a length followed by an array of that length. The term representation then would be the `a + |A| * (b a)`. With an `A` of 8 bytes, the term number would effectively be the 8 bytes for the length followed by an array of that length (up to a length of 255).
 
-`Pi (a : A) (B a)`, can be thought of as a dependent function type. The cardinality of an individual term after we've specified `a : A` is `| (B a) | ^ | A |`, which can be thought of as an array of length `|A|` of terms of type `(B a)` (since functions and arrays are equivalent in this system). The pi type has to account for each `A` though, so what we get in the end is an collection of arrays, one array of cardinality `| (B a) | ^ | A |` for each `a : A`. Ordering the inner arrays by the order of the terms in `A`, we don't need any more information other than the inner arrays. However each element in the outer collection has a different size (namely `| (B a) | ^ | A |`) so we can't properly call the outer collection an array—it ends up being more like a tuple.
+`Pi (a : A) (B a)`, can be thought of as a dependent function type. It's like a function type but instead of a constant cardinality like `|B| ^ |A|` for `A -> B`, each `|(B a)|` is different and is computed at the type level. The cardinality will be `|(B a1)| * |(B a2)| * … * |(B an)|`. Since the terms depend on the cardinality of the previous types, the term formula (following the examples so far) would be:
 
-We can determine the exact cardinality of a specific pi type after we have defined it. But the cardinality of an arbitrary pi type is not known precisely because it depends on the definition, specifically, what the size of each `(B a)` type is.
+```
+1 * a1 +
+|(B a1)| * a2 +
+|(B a1)| * |(B a2)| * a3 +
+|(B a1)| * |(B a2)| * |(B a3)| * a4 +
+…
+|(B a1)| * ... * |(B a_{n-1})| * an
+```
+
+These formulas are sufficient to encode *specific* sigma and pi types but not general ones. That is, the type-level functions are not encoded in the system, but are external to the system.
+
+To make the system fully dependent, we would need to encode the notion of a type of cardinality of at most `n` and allow the use of `FinSet n` in type signatures. `FinSet n` would be a set of cardinality `s : Fin n`.
+
+I'm not sure that encoding finite sets in this manner is necessary for the purpose of interpreting the numbers. But it would allow the use of the same system for the type description and the terms.
